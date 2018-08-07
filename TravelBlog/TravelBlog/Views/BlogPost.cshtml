@@ -1,0 +1,16 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.BlogPost>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+}
+<article>
+    <h1>@Model.Content.PageTitle</h1>
+    <div class="blogpost-meta">
+        <small class="blogpost-date">@Model.Content.CreateDate.ToShortDateString()</small>
+    </div>
+    @Html.GetGridHtml(Model.Content, "bodyText", "bootstrap3-fluid")
+    <!-- todo: implement discus comments -->
+    <span class="blogpost-cat">
+        @Html.Partial("~/Views/Partials/CategoryLinks.cshtml", Model.Content.Categories)
+    </span>
+</article>

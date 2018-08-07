@@ -1,0 +1,41 @@
+﻿@using Umbraco.Comment.Helper
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    var settings = DisqusHelper.GetSetting();
+    var payload = DisqusHelper.LogoutUser();
+}
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = '@settings.Shortname';
+    var disqus_identifier = '@Model.Content.Id';
+    var disqus_config = function () {
+        @if (settings.EnableSSO)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var member = Members.GetCurrentMemberProfileModel();
+                payload = DisqusHelper.GetPayload(member.UserName, member.Name, member.Email);
+            }
+            <text>
+        this.page.remote_auth_s3 = '@payload';
+        this.sso = {
+            name: "@settings.SSOName",
+            button: "@settings.SSOButton",
+            icon: "@settings.SSOIcon",
+            url: "@settings.SSOLogin",
+            logout: "@settings.SSOLogout",
+            width: "800",
+            height: "400"
+        };
+        </text>
+        }
+        this.page.api_key = "@settings.ApiKey";
+        this.language = "@(System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.ToLower())";
+    };
+    (function () {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>

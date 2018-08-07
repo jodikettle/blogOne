@@ -333,3 +333,4 @@ TravelBlog/Media/
 TravelBlog/Web.config
 TravelBlog/Web.Debug.config
 TravelBlog/Web.Release.config
+TravelBlog/TravelBlog/App_Data/
