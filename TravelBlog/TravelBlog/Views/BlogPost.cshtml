@@ -6,7 +6,7 @@
 <article>
     <h1>@Model.Content.PageTitle</h1>
     <div class="blogpost-meta">
-        <small class="blogpost-date">@Model.Content.CreateDate.ToShortDateString()</small>
+        <small class="blogpost-date">@Model.Content.CreateDate.ToLongDateString()</small>
     </div>
     @Html.GetGridHtml(Model.Content, "bodyText", "bootstrap3-fluid")
     <!-- todo: implement discus comments -->

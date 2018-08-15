@@ -307,16 +307,51 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UmbracoRouteConfig.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ListControllerBase.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\UmbracoHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\IMasterModel.cs" />
+    <Compile Include="Models\ListModel.cs" />
+    <Compile Include="Models\MasterModel.cs" />
+    <Compile Include="Models\PagerModel.cs" />
+    <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\PostsByTagModel.cs" />
+    <Compile Include="Models\VirtualPage.cs" />
+    <Compile Include="PathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteHandler\CategoryRouteHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
+    <Content Include="App_Plugins\uCommentator\assets\style.css" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\addBlacklistDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\addWhitelistDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\approved.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\blacklist.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\blacklistDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\confirmationDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\deleted.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\deleteDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\detailDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\edit.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\pending.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\showDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\spam.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\spamDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\unShowDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\unspamDialog.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\whitelist.html" />
+    <Content Include="App_Plugins\uCommentator\backoffice\uCommentatorSection\whitelistDialog.html" />
+    <Content Include="App_Plugins\uCommentator\uCommentator.controller.js" />
+    <Content Include="App_Plugins\uCommentator\uCommentator.resources.js" />
     <Content Include="config\grid.editors.config.js" />
     <Content Include="config\Lang\cs-CZ.user.xml" />
     <Content Include="config\Lang\da-DK.user.xml" />
@@ -386,6 +421,7 @@
     <Content Include="config\BackOfficeTours\getting-started.json" />
     <Content Include="config\applications.config" />
     <Content Include="config\404handlers.config" />
+    <Content Include="App_Plugins\uCommentator\package.manifest" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1972,13 +2008,14 @@
     <Content Include="Views\Blog.cshtml" />
     <Content Include="Views\BlogPost.cshtml" />
     <Content Include="Views\ContentPage.cshtml" />
-    <Content Include="Views\Partials\SectionHeader.cshtml" />
     <Content Include="Views\Partials\CategoryLinks.cshtml" />
     <Content Include="Views\MacroPartials\LatestBlogPosts.cshtml" />
+    <Content Include="Views\Category.cshtml" />
+    <Content Include="Views\Category\ListByTag.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\ListControllerBase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
