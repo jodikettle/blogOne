@@ -11,21 +11,6 @@ namespace TravelBlog
         private const string VirtualThemeViewPathToken = "~" + ThemePath + "{0}.cshtml";
         private const string VirtualThemePartialViewPathToken = "~" + ThemePath + "/Partials/{0}.cshtml";
 
-        public static string GetThemePath(IMasterModel model)
-        {
-            return string.Format(VirtualThemePathToken);
-        }
-
-        public static string GetThemeViewPath(IMasterModel model, string viewName)
-        {
-            return string.Format(VirtualThemeViewPathToken, viewName);
-        }
-
-        public static string GetThemePartialViewPath(IMasterModel model, string viewName)
-        {
-            return string.Format(VirtualThemePartialViewPathToken, viewName);
-        }
-
         /// <summary>
         /// Get the full domain of the current page
         /// </summary>

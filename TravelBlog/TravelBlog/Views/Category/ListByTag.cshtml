@@ -1,12 +1,32 @@
-﻿@inherits UmbracoViewPage<TravelBlog.Models.VirtualPage>
+﻿@inherits UmbracoViewPage<TravelBlog.Models.ListPageModel>
 @{
     Layout = "../Master.cshtml";
 }
-<!--main bar-->
+<a class="category-title" href="@Model.CategoryName"><h1>Category : @Model.CategoryName</h1></a>
+
 <div class="col-md-8 blog-main">
-    <section class="section section">
-        <p>Render</p>
-    </section>
+    <div class="posts" role="main">
+        @if (!Model.Children.Any())
+        {
+            @*<h3>KEEP SEARCHING</h3>
+            @Html.Partial("SearchBox", Model)*@
+
+            if (!Model.PageTitle.IsNullOrWhiteSpace())
+            {
+                <p>Sorry. No blog posts found</p>
+            }
+        }
+        else
+        {
+            foreach (var post in Model.Posts)
+            {
+
+                @Html.Partial("ListPost", post)
+            }
+
+            @Html.Partial("Pager", Model.Pages)
+        }
+    </div>
 </div>
 <!--side bar-->
 <aside class="col-md-4 blog-sidebar mt5">

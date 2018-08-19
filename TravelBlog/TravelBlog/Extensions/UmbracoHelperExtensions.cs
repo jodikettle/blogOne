@@ -11,10 +11,8 @@ namespace TravelBlog.Extensions
 {
     public static class UmbracoHelperExtensions
     {
-        public static PostsByTagModel GetContentByTag(this UmbracoHelper helper, IMasterModel masterModel, string tag, string baseUrlName, long page, long pageSize)
+        public static PostsByTagModel GetContentByTag(this UmbracoHelper helper, IMasterModel masterModel, string tag, long page, long pageSize)
         {
-            //TODO: We want to use the core for this but it's not available, this needs to be implemented: http://issues.umbraco.org/issue/U4-9290
-
             var appContext = helper.UmbracoContext.Application;
             var sqlSyntax = appContext.DatabaseContext.SqlSyntax;
 
@@ -23,7 +21,7 @@ namespace TravelBlog.Extensions
                 var sqlTags = GetTagQuery("umbracoNode.id", masterModel, sqlSyntax);
                 if (sqlSyntax is MySqlSyntaxProvider)
                 {
-                    sqlTags.Where("cmsTags.tag = @tagName AND cmsTags." + sqlSyntax.GetQuotedColumnName("group") + " = @tagGroup", new
+                    sqlTags.Where("cmsTags.tag = @tagName", new
                     {
                         tagName = tag
                     });
@@ -33,7 +31,7 @@ namespace TravelBlog.Extensions
                     //For whatever reason, SQLCE and even SQL SERVER are not willing to lookup 
                     //tags with hyphens in them, it's super strange, so we force the tag column to be - what it already is!! what tha.
 
-                    sqlTags.Where("CAST(cmsTags.tag AS NVARCHAR(200)) = @tagName AND cmsTags." + sqlSyntax.GetQuotedColumnName("group") + " = @tagGroup", new
+                    sqlTags.Where("CAST(cmsTags.tag AS NVARCHAR(200)) = @tagName", new
                     {
                         tagName = tag
                     });
@@ -42,7 +40,7 @@ namespace TravelBlog.Extensions
                 //get the publishedDate property type id on the ArticulatePost content type
                 var publishedDatePropertyTypeId = appContext.DatabaseContext.Database.ExecuteScalar<int>(@"SELECT cmsPropertyType.id FROM cmsContentType
 INNER JOIN cmsPropertyType ON cmsPropertyType.contentTypeId = cmsContentType.nodeId
-WHERE cmsContentType.alias = @contentTypeAlias AND cmsPropertyType.alias = @propertyTypeAlias", new { contentTypeAlias = "ArticulatePost", propertyTypeAlias = "publishedDate" });
+WHERE cmsContentType.alias = @contentTypeAlias AND cmsPropertyType.alias = @propertyTypeAlias", new { contentTypeAlias = "BlogPost", propertyTypeAlias = "publishedDate" });
 
                 var sqlContent = GetContentByTagQueryForPaging("umbracoNode.id", masterModel, sqlSyntax, publishedDatePropertyTypeId);
 
@@ -60,9 +58,9 @@ WHERE cmsContentType.alias = @contentTypeAlias AND cmsPropertyType.alias = @prop
                 var publishedContent = helper.TypedContent(taggedContent.Items).WhereNotNull();
 
                 var model = new PostsByTagModel(
-                    publishedContent.Select(c => new PostModel(c)),
+                    publishedContent.Select(c => new PostListItemModel(c)),
                     tag,
-                    masterModel.RootBlogNode.Url.EnsureEndsWith('/') + baseUrlName + "/" + tag.ToLowerInvariant(),
+                    "/Category/" + tag.ToLowerInvariant(),
                     Convert.ToInt32(taggedContent.TotalItems));
 
                 result.Add(model);

@@ -8,12 +8,12 @@ namespace TravelBlog.Models
 {
     public class PostsByTagModel
     {
-        public PostsByTagModel(IEnumerable<PostModel> posts, string tagName, string tagUrl)
+        public PostsByTagModel(IEnumerable<PostListItemModel> posts, string tagName, string tagUrl)
     : this(posts, tagName, tagUrl, -1)
         {
         }
 
-        public PostsByTagModel(IEnumerable<PostModel> posts, string tagName, string tagUrl, int count)
+        public PostsByTagModel(IEnumerable<PostListItemModel> posts, string tagName, string tagUrl, int count)
         {
             if (posts == null) throw new ArgumentNullException(nameof(posts));
             if (tagName == null) throw new ArgumentNullException(nameof(tagName));
@@ -28,7 +28,7 @@ namespace TravelBlog.Models
                 _count = count;
         }
 
-        public IEnumerable<PostModel> Posts { get; }
+        public IEnumerable<PostListItemModel> Posts { get; }
         public string TagName { get; private set; }
         public string TagUrl { get; private set; }
 

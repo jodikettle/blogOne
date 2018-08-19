@@ -1,19 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TravelBlog.Models;
 using Umbraco.Web.Models;
-using Umbraco.Web.Mvc;
-using Umbraco.Core;
-using Umbraco.Web;
 using TravelBlog.Extensions;
+using System.Web.Routing;
 
 namespace TravelBlog.Controllers
 {
     public class CategoryListController : ListControllerBase
     {
+        /// <summary>
+        /// Sets a custom action invoker so that the correct action is executed based on the specified tag/category url defined on the articulate root
+        /// </summary>
+        /// <param name="requestContext">The HTTP context and route data.</param>
+        protected override void Initialize(RequestContext requestContext)
+        {
+            ActionInvoker = new TagsControllerActionInvoker();
+            base.Initialize(requestContext);
+        }
+
         public ActionResult ListByTag(RenderModel model, string tag, int? p)
         {
             // in my case, the IPublishedContent attached to this
@@ -34,9 +39,7 @@ namespace TravelBlog.Controllers
 
         private ActionResult RenderArticleListByCategory(IRenderModel model, string tag, int? p)
         {
-            var tagurlName = model.Content.GetPropertyValue<string>("tagsUrlName");
-
-            var tagPage = model.Content as VirtualPage;
+            var tagPage = model.Content as TravelBlog.Models.VirtualPage;
             if (tagPage == null)
             {
                 throw new InvalidOperationException("The RenderModel.Content instance must be of type " + typeof(VirtualPage));
@@ -45,7 +48,7 @@ namespace TravelBlog.Controllers
             //create a master model
             var masterModel = new MasterModel(model.Content);
 
-            var contentByTag = Umbraco.GetContentByTag(masterModel, tagPage.Name, tagurlName, p ?? 1, masterModel.PageSize);
+            var contentByTag = Umbraco.GetContentByTag(masterModel, tagPage.Name, p ?? 1, masterModel.PageSize);
 
             //this is a special case in the event that a tag contains a '.', when this happens we change it to a '-'
             // when generating the URL. So if the above doesn't return any tags and the tag contains a '-', then we
@@ -55,7 +58,6 @@ namespace TravelBlog.Controllers
                 contentByTag = Umbraco.GetContentByTag(
                     masterModel,
                     tagPage.Name.Replace('-', '.'),
-                    tagurlName,
                     p ?? 1, masterModel.PageSize);
             }
 

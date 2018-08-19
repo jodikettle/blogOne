@@ -20,12 +20,11 @@ namespace TravelBlog.App_Start
             {
                 RouteTable.Routes.MapUmbracoRoute(
                     "CategoryRoute",
-                    "Category/{tagName}",
+                    "Category/{tag}",
                     new
                     {
-                        controller = "Category",
-                        action = "ListByTag",
-                        tagName = UrlParameter.Optional
+                        controller = "CategoryList",
+                        action = "ListByTag"
                     },
                     new CategoryRouteHandler(urlProvider, 1065));
             }

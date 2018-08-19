@@ -13,21 +13,21 @@ namespace TravelBlog.Controllers
         /// <summary>
         /// Gets a paged list view for a given posts by author/tags/categories model
         /// </summary>
-        protected ActionResult GetPagedListView(IMasterModel masterModel, IPublishedContent pageNode, IEnumerable<IPublishedContent> listItems, int totalPosts, int? p)
+        protected ActionResult GetPagedListView(IMasterModel categoryPageModel, IPublishedContent pageNode,IEnumerable<PostListItemModel> listItems, int totalPosts, int? p)
         {
-            if (masterModel == null) throw new ArgumentNullException(nameof(masterModel));
+            if (categoryPageModel == null) throw new ArgumentNullException(nameof(categoryPageModel));
             if (pageNode == null) throw new ArgumentNullException(nameof(pageNode));
             if (listItems == null) throw new ArgumentNullException(nameof(listItems));
 
             PagerModel pager;
-            if (!GetPagerModel(masterModel, totalPosts, p, out pager))
+            if (!GetPagerModel(categoryPageModel, totalPosts, p, out pager))
             {
-                return new RedirectToUmbracoPageResult(masterModel.RootBlogNode, UmbracoContext);
+                return new RedirectToUmbracoPageResult(categoryPageModel.RootBlogNode, UmbracoContext);
             }
 
-            var listModel = new ListModel(pageNode, listItems, pager);
+            var listModel = new ListPageModel(pageNode, listItems, pager);
 
-            return View(PathHelper.GetThemeViewPath(listModel, "List"), listModel);
+            return View("~/Views/Category/ListByTag.cshtml", listModel);
         }
 
         protected bool GetPagerModel(IMasterModel masterModel, int totalPosts, int? p, out PagerModel pager)

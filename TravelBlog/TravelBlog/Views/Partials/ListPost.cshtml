@@ -1,0 +1,20 @@
+﻿@model TravelBlog.Models.PostListItemModel
+
+<div class="blogpost">
+    <a href="@Model.Url" class="blogtitle">
+        <h2 class="blogpost-title">@Model.PageTitle</h2>
+    </a>
+    <div class="blogpost-meta">
+        <small class="blogpost-date">@Model.PublishedDate.ToLongDateString()</small>
+    </div>
+    <small class="blogpost-cat">
+        @Html.Partial("~/Views/Partials/CategoryLinks.cshtml", Model.Categories)
+    </small>
+    <a href="@Model.Url">
+        <div class="post-image">
+            <img src="@Model.ImageUrl" alt="@Model.PageTitle">
+        </div>
+    </a>
+    <div class="blogpost-excerpt">@Model.Excerpt</div>
+    <a href="@Model.Url" class="btn btn-info continue-reading">Continue Reading</a>
+</div>

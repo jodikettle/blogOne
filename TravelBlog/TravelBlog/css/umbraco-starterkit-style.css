@@ -2948,3 +2948,22 @@ article {
         align-items: center
     }
 }
+
+.category-title {
+    font-size: 28px;
+    letter-spacing: 1px;
+    margin: 0;
+    text-decoration: none;
+    color: #000;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    font-weight: 600;
+    font-family: 'Indie Flower';
+}
+.category-title:hover {
+    text-decoration:none;
+}
+footer a {
+    color: #ffffff;
+}

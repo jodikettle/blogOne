@@ -2,16 +2,20 @@
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
+using TravelBlog.Extensions;
 
 namespace TravelBlog.Models
 {
+    /// <summary>
+    /// Used to create a fake dynamic umbraco page for rendering tag lists, tag pages and search results (any virtual route)
+    /// </summary>
     public class VirtualPage : PublishedContentWrapped
     {
         private readonly string _pageName;
         private readonly string _urlPath;
 
         public VirtualPage(IPublishedContent rootBlogPage, string pageName, string pageTypeAlias, string urlPath = null)
-                    : base(rootBlogPage)
+            : base(rootBlogPage)
         {
             if (pageName == null) throw new ArgumentNullException("pageName");
             if (pageTypeAlias == null) throw new ArgumentNullException("pageTypeAlias");
@@ -20,8 +24,9 @@ namespace TravelBlog.Models
 
             if (urlPath != null)
             {
-                _urlPath = urlPath;//.SafeEncodeUrlSegments();
+                _urlPath = urlPath.SafeEncodeUrlSegments();
             }
+
         }
 
         public override string Url => base.Url.EnsureEndsWith('/') + (_urlPath ?? UrlName);

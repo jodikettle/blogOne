@@ -27,7 +27,7 @@ namespace TravelBlog.RouteHandler
         protected override IPublishedContent FindContent(RequestContext requestContext, UmbracoContext umbracoContext)
         {
             var baseContent = new { Id = _blogRootNode };
-            var tag = requestContext.RouteData.GetRequiredString("tagName");
+            var tag = requestContext.RouteData.GetRequiredString("tag");
             var urlName = "Category";
 
             return new VirtualPage(

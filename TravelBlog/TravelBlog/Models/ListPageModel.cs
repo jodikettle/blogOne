@@ -1,49 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using Umbraco.Core.Models;
+using Umbraco.Core.Models.PublishedContent;
 
 namespace TravelBlog.Models
 {
-    /// <summary>
-    /// Represents a page that displays a list of blog posts
-    /// </summary>
-    public class ListModel : MasterModel
+    public class ListPageModel : MasterModel
     {
-        private readonly IEnumerable<IPublishedContent> _listItems;
-        private IEnumerable<PostModel> _resolvedList;
+        private readonly IEnumerable<PostListItemModel> _listItems;
+        private IEnumerable<PostListItemModel> _resolvedList;
         private readonly PagerModel _pager;
 
-
-        /// <summary>
-        /// Constructor accepting an explicit list of child items
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="listItems"></param>
-        /// <param name="pager"></param>
-        /// <remarks>
-        /// Default sorting by published date will be disabled for this list model, it is assumed that the list items will
-        /// already be sorted.
-        /// </remarks>
-        public ListModel(IPublishedContent content, IEnumerable<IPublishedContent> listItems, PagerModel pager)
+        public ListPageModel(IPublishedContent content, IEnumerable<PostListItemModel> listItems, PagerModel pager)
             : base(content)
         {
-
             if (content == null) throw new ArgumentNullException(nameof(content));
             if (listItems == null) throw new ArgumentNullException(nameof(listItems));
             if (pager == null) throw new ArgumentNullException(nameof(pager));
 
-            _pager = pager;
             _listItems = listItems;
-            if (content.DocumentTypeAlias.Equals("ArticulateArchive"))
-                PageTitle = BlogTitle + " - " + BlogDescription;
-            else
-                PageTags = Name;
-        }
-
-        public ListModel(IPublishedContent content)
-            : base(content)
-        {
+            _pager = pager;
         }
 
         /// <summary>
@@ -54,7 +32,7 @@ namespace TravelBlog.Models
         /// <summary>
         /// Strongly typed access to the list of blog posts
         /// </summary>
-        public IEnumerable<PostModel> Posts
+        public IEnumerable<PostListItemModel> Posts
         {
             get
             {
@@ -64,7 +42,7 @@ namespace TravelBlog.Models
 
                 if (_listItems == null)
                 {
-                    _resolvedList = base.Children.Select(x => new PostModel(x)).ToArray();
+                    _resolvedList = base.Children.Select(x => new PostListItemModel(x)).ToArray();
                     return _resolvedList;
                 }
 
@@ -74,12 +52,12 @@ namespace TravelBlog.Models
                     _resolvedList = _listItems
                     //Skip will already be done in this case, but we'll take again anyways just to be safe                    
                         .Take(_pager.PageSize)
-                        .Select(x => new PostModel(x))
+                        .Select(x => new PostListItemModel(x))
                         .ToArray();
                 }
                 else
                 {
-                    _resolvedList = Enumerable.Empty<PostModel>();
+                    _resolvedList = Enumerable.Empty<PostListItemModel>();
                 }
 
                 return _resolvedList;

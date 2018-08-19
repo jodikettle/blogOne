@@ -311,16 +311,17 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListControllerBase.cs" />
+    <Compile Include="Controllers\TagsControllerActionInvoker.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\UmbracoHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IMasterModel.cs" />
-    <Compile Include="Models\ListModel.cs" />
+    <Compile Include="Models\ListPageModel.cs" />
     <Compile Include="Models\MasterModel.cs" />
     <Compile Include="Models\PagerModel.cs" />
-    <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\PostListItem.cs" />
     <Compile Include="Models\PostsByTagModel.cs" />
     <Compile Include="Models\VirtualPage.cs" />
     <Compile Include="PathHelper.cs" />
@@ -2012,10 +2013,16 @@
     <Content Include="Views\MacroPartials\LatestBlogPosts.cshtml" />
     <Content Include="Views\Category.cshtml" />
     <Content Include="Views\Category\ListByTag.cshtml" />
+    <Content Include="Views\Partials\Pager.cshtml" />
+    <Content Include="Views\Partials\CommentsDiscus.cshtml" />
+    <Content Include="Views\Partials\Sharing.cshtml" />
+    <Content Include="Views\Partials\SearchBox.cshtml" />
+    <Content Include="Views\Partials\ListPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ListControllerBase\" />
+    <Folder Include="Views\TagsControllerActionInvoker\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
